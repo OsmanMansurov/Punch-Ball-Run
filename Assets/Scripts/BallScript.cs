@@ -10,12 +10,6 @@ public class BallScript : MonoBehaviour
     public bool disableGlove = false;
     public GameObject gameOverManager;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -31,13 +25,13 @@ public class BallScript : MonoBehaviour
         {
             // If we collide with the objective, trigger a game over screen with no bonus points
             gameOverManager.GetComponent<GameOverScript>().EndGameRegular();
-
         }
+
         if (collision.gameObject.CompareTag("Goal"))
         {
             // If we collide with the goal, trigger a game over screen with bonus points equal
             // to the velocity of the ball
-            gameOverManager.GetComponent<GameOverScript>().EndGameGoal(rb.linearVelocity.magnitude);
+            gameOverManager.GetComponent<GameOverScript>().EndGameGoal((rb.linearVelocity.magnitude / maxSpeed) * 100);
         }
     }
 }

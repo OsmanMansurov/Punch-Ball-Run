@@ -7,11 +7,12 @@ public class UIManager : MonoBehaviour
 {
     public Image stamina;
     public AudioSource gloveReady;
+    public AudioSource music;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        music.Play();
     }
 
     // Update is called once per frame

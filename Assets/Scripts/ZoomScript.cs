@@ -14,7 +14,7 @@ public class ZoomScript : MonoBehaviour
     public bool isZoomed = false;
     void Start()
     {
-        Camera.main.orthographicSize = 5f;
+        Camera.main.orthographicSize = 7f;
         targetSize = 10;
     }
 
@@ -29,7 +29,7 @@ public class ZoomScript : MonoBehaviour
 
     public void ToggleZoom()
     {
-        if (Camera.main.orthographicSize == 5f)
+        if (Camera.main.orthographicSize == 7f)
         {
             // If the player wishes to zoom the camera, disable the glove script,
             // glove ui script, and the glove UI
@@ -57,7 +57,7 @@ public class ZoomScript : MonoBehaviour
             {
                 gloveButton.GetComponent<GloveUIScript>().ActivateGloveUI();
             }
-            Camera.main.orthographicSize = 5f;
+            Camera.main.orthographicSize = 7f;
         }
     }
 }

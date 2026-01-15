@@ -12,7 +12,6 @@ public class GameOverScript : MonoBehaviour
     public GameObject glove;
     public TMP_Text pointsScoredText;
     public TMP_Text gameOverText;
-    public AudioSource music;
     public AudioSource victory;
     public AudioSource defeat;
 
@@ -24,8 +23,6 @@ public class GameOverScript : MonoBehaviour
         levelSelectButton.SetActive(false);
         pointsScoredText.text = "";
         gameOverText.text = "";
-        // Turn on the music
-        music.Play();
     }
 
     // Update is called once per frame
