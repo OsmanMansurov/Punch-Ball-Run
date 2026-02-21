@@ -9,7 +9,7 @@ public class GloveScript : MonoBehaviour
     public Rigidbody2D rb;
     public float cooldown = 3f;
     public Transform target; // The glove will point in the direction of this target (the ball)
-    public ParticleSystem particles;
+    public ParticleSystem particles; // The particles used when the glove hits the ball
     private int originalLayer;
     private int noCollisionLayer;
     private Vector2 previousPosition; // Used to calculate velocity
@@ -18,7 +18,6 @@ public class GloveScript : MonoBehaviour
     public float elapsed; // elapsed time for glove cooldown
     public GameObject UIManager;
     public GameObject GloveUI;
-    public GameObject zoomButton;
     public bool isActive = true;
 
     private Vector2 cachedMouseWorldPos;
@@ -33,6 +32,11 @@ public class GloveScript : MonoBehaviour
 
     void Update()
     {
+        
+    }
+
+    void FixedUpdate()
+    {
         // Calculate the velocity of the glove
         Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
         currentVelocity = (currentPosition - previousPosition) / Time.deltaTime;
@@ -40,10 +44,7 @@ public class GloveScript : MonoBehaviour
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = 0f;
         cachedMouseWorldPos = Camera.main.ScreenToWorldPoint(mousePosition);
-    }
 
-    void FixedUpdate()
-    {
         if (target != null)
         {
             // Point the glove in the direction of the ball
@@ -54,10 +55,11 @@ public class GloveScript : MonoBehaviour
 
         // Move towards the mouse's position
         targetPosition = cachedMouseWorldPos;
-        Vector2 newPosition = Vector2.MoveTowards(rb.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
+        Vector2 newPosition = Vector2.MoveTowards(rb.position, targetPosition, moveSpeed * Time.deltaTime);
         rb.MovePosition(newPosition);
     }
 
+    // Handle glove collision with ball
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ball"))
@@ -71,11 +73,12 @@ public class GloveScript : MonoBehaviour
                 gameObject.layer = noCollisionLayer;
                 StartCoroutine(ResetPushCooldown());
             }
-            // Play the particle effect
-            particles.transform.position = collision.transform.position;
+            // Play the particle effect after getting precise location
+            particles.transform.position = collision.contacts[0].point;
             particles.Play();
         }
     }
+
     private IEnumerator ResetPushCooldown()
     {
         elapsed = 0f;
@@ -92,8 +95,6 @@ public class GloveScript : MonoBehaviour
         }
         // This yield statement prevents the glove from reactivating
         // while the player is zoomed out
-        // TODO: see ZoomScript
-        yield return new WaitUntil(() => !zoomButton.GetComponent<ZoomScript>().isZoomed);
         GloveUI.GetComponent<GloveUIScript>().ActivateGloveUI();
     }
 
@@ -107,7 +108,7 @@ public class GloveScript : MonoBehaviour
         GetComponent<SpriteRenderer>().enabled = true;
     }
 
-    private void DisableGlove()
+    public void DisableGlove()
     {
         // Make sure that the glove can't be controlled
         isActive = false;

@@ -7,6 +7,14 @@ TagManager:
   - Ball
   - Objective
   - Goal
+  - Wall
+  - Speed Zone
+  - Danger
+  - Fast Speed Zone
+  - Glove
+  - GloveUI
+  - GameOverManager
+  - Rock
   layers:
   - Default
   - TransparentFX

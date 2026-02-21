@@ -7,7 +7,6 @@ public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
     public AudioSource buttonSound;
-    public GameObject zoomButton;
     public GameObject staminaBar;
     public GameObject gloveButton;
     public string[] lines;
@@ -20,7 +19,6 @@ public class Dialogue : MonoBehaviour
     {
         textComponent.text = string.Empty;
         StartDialogue();
-        zoomButton.SetActive(false);
         staminaBar.SetActive(false);
         gloveButton.SetActive(false);
     }
@@ -56,7 +54,6 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
-            zoomButton.SetActive(true);
             staminaBar.SetActive(true);
             gloveButton.SetActive(true);
             gameObject.SetActive(false);

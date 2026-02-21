@@ -20,7 +20,7 @@ public class Manager : MonoBehaviour
     {
         menuTheme.loop = true;
         musicOn = true;
-        // menuTheme.Play();
+        menuTheme.Play();
         backButton.SetActive(false);
         audioButton.SetActive(false);
         settingsAnim.SetBool("down", true);
